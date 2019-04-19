@@ -104,7 +104,7 @@ static void timers_config(void)
     LL_TIM_SetPrescaler(TIM2, 47999);
     LL_TIM_IC_SetFilter(TIM2, LL_TIM_CHANNEL_CH1, LL_TIM_IC_FILTER_FDIV16_N5);
     LL_TIM_IC_SetPolarity(TIM2, LL_TIM_CHANNEL_CH1,
-                          LL_TIM_IC_POLARITY_FALLING);
+                          LL_TIM_IC_POLARITY_BOTHEDGE);
     LL_TIM_IC_SetActiveInput(TIM2, LL_TIM_CHANNEL_CH1,
                              LL_TIM_ACTIVEINPUT_DIRECTTI);
     LL_TIM_IC_SetPrescaler(TIM2, LL_TIM_CHANNEL_CH1, LL_TIM_ICPSC_DIV1);
@@ -128,6 +128,7 @@ void TIM2_IRQHandler(void)
 
     LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_8);
     //LL_GPIO_TogglePin(GPIOC, LL_GPIO_PIN_9);
+    if (LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_5))
     output = LL_TIM_IC_GetCaptureCH1(TIM2) - old;
     old = LL_TIM_IC_GetCaptureCH1(TIM2);
     //output = 1234;
