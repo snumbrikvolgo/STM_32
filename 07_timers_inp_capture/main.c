@@ -61,6 +61,7 @@ static void gpio_config(void)
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOC);
     LL_GPIO_SetPinMode(GPIOC, LL_GPIO_PIN_8, LL_GPIO_MODE_OUTPUT);
     LL_GPIO_SetPinMode(GPIOC, LL_GPIO_PIN_9, LL_GPIO_MODE_OUTPUT);
+    LL_GPIO_SetPinMode(GPIOC, LL_GPIO_PIN_0, LL_GPIO_MODE_INPUT);
 
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
     LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_0, LL_GPIO_MODE_OUTPUT);
@@ -71,15 +72,20 @@ static void gpio_config(void)
     LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_5, LL_GPIO_MODE_OUTPUT);
     LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_6, LL_GPIO_MODE_OUTPUT);
     //LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_7, LL_GPIO_MODE_OUTPUT);
-    LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_8, LL_GPIO_MODE_OUTPUT);
-    LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_9, LL_GPIO_MODE_OUTPUT);
-    LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_10, LL_GPIO_MODE_OUTPUT);
-    LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_13, LL_GPIO_MODE_OUTPUT);
-    LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_14, LL_GPIO_MODE_OUTPUT);
+    //LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_8, LL_GPIO_MODE_OUTPUT);
+    //LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_9, LL_GPIO_MODE_OUTPUT);
+    //LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_10, LL_GPIO_MODE_OUTPUT);
+    //LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_13, LL_GPIO_MODE_OUTPUT);
+    LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_7, LL_GPIO_MODE_OUTPUT);
      //Init port for USER button
 
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA);
-    LL_GPIO_SetPinMode(GPIOC, LL_GPIO_PIN_0, LL_GPIO_MODE_INPUT);
+    LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_1, LL_GPIO_MODE_OUTPUT);
+    LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_2, LL_GPIO_MODE_OUTPUT);
+    LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_4, LL_GPIO_MODE_OUTPUT);
+    LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_6, LL_GPIO_MODE_OUTPUT);
+    LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_5, LL_GPIO_MODE_INPUT);
+
 
     return;
 }
@@ -155,38 +161,38 @@ static void set_indicator(uint8_t number)
      * Put all pins for indicator together (for segments only)
      */
     static uint32_t mask = LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | \
-                           LL_GPIO_PIN_14 | LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | \
+                           LL_GPIO_PIN_3 | LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | \
                            LL_GPIO_PIN_6 ;
     /*
      * For simplicity there are only decoded values for the first 4 numbers
      */
      uint32_t decoder[16] = {
      LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3 | \
-     LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | LL_GPIO_PIN_14, // 0
+     LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | LL_GPIO_PIN_3, // 0
      LL_GPIO_PIN_1 | LL_GPIO_PIN_2, // 1
      LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_6 | LL_GPIO_PIN_4 | \
-     LL_GPIO_PIN_14, // 2
+     LL_GPIO_PIN_3, // 2
      LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_6 | LL_GPIO_PIN_2 | \
-     LL_GPIO_PIN_14, // 3
+     LL_GPIO_PIN_3, // 3
      LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2, // 4
 
      LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_0 | LL_GPIO_PIN_2 |
-     LL_GPIO_PIN_14, //5
+     LL_GPIO_PIN_3, //5
      LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_0 | LL_GPIO_PIN_2 |
-     LL_GPIO_PIN_14 | LL_GPIO_PIN_4, //6
+     LL_GPIO_PIN_3 | LL_GPIO_PIN_4, //6
      LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2,//7
-     LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_14 |
+     LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3 |
      LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6,//8
      LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_6 |
-     LL_GPIO_PIN_5 | LL_GPIO_PIN_14,//9
+     LL_GPIO_PIN_5 | LL_GPIO_PIN_3,//9
      LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 |
      LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6,//A
-     LL_GPIO_PIN_2 | LL_GPIO_PIN_14 | LL_GPIO_PIN_4 | LL_GPIO_PIN_5 |
+     LL_GPIO_PIN_2 | LL_GPIO_PIN_3 | LL_GPIO_PIN_4 | LL_GPIO_PIN_5 |
      LL_GPIO_PIN_6,//B
      LL_GPIO_PIN_6 | LL_GPIO_PIN_4 | LL_GPIO_PIN_14,//c:
-     LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_14 | LL_GPIO_PIN_4 |
+     LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_3 | LL_GPIO_PIN_4 |
      LL_GPIO_PIN_6,//D
-     LL_GPIO_PIN_0 | LL_GPIO_PIN_14 |
+     LL_GPIO_PIN_0 | LL_GPIO_PIN_3 |
      LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6,//E
      LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_0 | LL_GPIO_PIN_4 //F
  };
@@ -212,62 +218,26 @@ static void set_indicator(uint8_t number)
     return;
 }
 
-void show_digit(digit)
-{
-    uint32_t decoder[16] = {
-    LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_6 | \
-    LL_GPIO_PIN_4 | LL_GPIO_PIN_5, // 0
-    LL_GPIO_PIN_1 | LL_GPIO_PIN_2, // 1
-    LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_6 | LL_GPIO_PIN_4 | \
-    LL_GPIO_PIN_14, // 2
-    LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_6 | LL_GPIO_PIN_2 | \
-    LL_GPIO_PIN_14, // 3
-    LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2, // 4
 
-    LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_0 | LL_GPIO_PIN_2 |
-    LL_GPIO_PIN_14, //5
-    LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_0 | LL_GPIO_PIN_2 |
-    LL_GPIO_PIN_14 | LL_GPIO_PIN_4, //6
-    LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2,//7
-    LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_14 |
-    LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6,//8
-    LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_6 |
-    LL_GPIO_PIN_5 | LL_GPIO_PIN_14,//9
-    LL_GPIO_PIN_0 | LL_GPIO_PIN_1 | LL_GPIO_PIN_2 |
-    LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6,//A
-    LL_GPIO_PIN_2 | LL_GPIO_PIN_14 | LL_GPIO_PIN_4 | LL_GPIO_PIN_5 |
-    LL_GPIO_PIN_6,//B
-    LL_GPIO_PIN_6 | LL_GPIO_PIN_4 | LL_GPIO_PIN_14,//c:
-    LL_GPIO_PIN_1 | LL_GPIO_PIN_2 | LL_GPIO_PIN_14 | LL_GPIO_PIN_4 |
-    LL_GPIO_PIN_6,//D
-    LL_GPIO_PIN_0 | LL_GPIO_PIN_14 |
-    LL_GPIO_PIN_4 | LL_GPIO_PIN_5 | LL_GPIO_PIN_6,//E
-    LL_GPIO_PIN_5 | LL_GPIO_PIN_6 | LL_GPIO_PIN_0 | LL_GPIO_PIN_4 //F
-};
-uint16_t out = decoder[digit];
- LL_GPIO_WriteOutputPort(GPIOB, out);
- return;
-
-}
 
 static void dyn_ind (uint32_t value) {
 
-		LL_GPIO_WriteOutputPort(GPIOB, ~LL_GPIO_PIN_13);
+		LL_GPIO_WriteOutputPort(GPIOA, ~LL_GPIO_PIN_6);
 		set_indicator((value/1000)%10);
 
 		delay_10ms();
 
-		LL_GPIO_WriteOutputPort(GPIOB, ~LL_GPIO_PIN_8);
+		LL_GPIO_WriteOutputPort(GPIOA, ~LL_GPIO_PIN_1);
 		set_indicator((value/100) % 10);
 
 		delay_10ms();
 
-		LL_GPIO_WriteOutputPort(GPIOB, ~LL_GPIO_PIN_9);
+		LL_GPIO_WriteOutputPort(GPIOA, ~LL_GPIO_PIN_2);
 		set_indicator((value / 10) %10);
 
 		delay_10ms();
 
-		LL_GPIO_WriteOutputPort(GPIOB, ~LL_GPIO_PIN_10);
+		LL_GPIO_WriteOutputPort(GPIOA, ~LL_GPIO_PIN_4);
 		set_indicator(value%10);
 
 		delay_10ms();
