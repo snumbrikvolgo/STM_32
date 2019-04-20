@@ -244,6 +244,7 @@ static void dyn_ind (uint32_t value) {
 }
 
 
+
 int main(void)
 {
     rcc_config();
